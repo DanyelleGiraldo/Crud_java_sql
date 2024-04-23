@@ -16,6 +16,11 @@ public class FormAlumno extends javax.swing.JFrame {
 	public FormAlumno() {
 		initComponents();
 
+		this.setLocationRelativeTo(null);
+		
+		txtid.setEnabled(false);
+
+		
 		CAlumnos objetoAlumnos=new CAlumnos();
 		objetoAlumnos.MostrarAlumnos(tbTotalAlumnos);
 		
@@ -80,8 +85,18 @@ public class FormAlumno extends javax.swing.JFrame {
                 });
 
                 BtnModificar.setText("Modificar");
+                BtnModificar.addActionListener(new java.awt.event.ActionListener() {
+                        public void actionPerformed(java.awt.event.ActionEvent evt) {
+                                BtnModificarActionPerformed(evt);
+                        }
+                });
 
                 BtnEliminar.setText("Eliminar");
+                BtnEliminar.addActionListener(new java.awt.event.ActionListener() {
+                        public void actionPerformed(java.awt.event.ActionEvent evt) {
+                                BtnEliminarActionPerformed(evt);
+                        }
+                });
 
                 javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
                 jPanel1.setLayout(jPanel1Layout);
@@ -142,6 +157,11 @@ public class FormAlumno extends javax.swing.JFrame {
 
                         }
                 ));
+                tbTotalAlumnos.addMouseListener(new java.awt.event.MouseAdapter() {
+                        public void mouseClicked(java.awt.event.MouseEvent evt) {
+                                tbTotalAlumnosMouseClicked(evt);
+                        }
+                });
                 jScrollPane2.setViewportView(tbTotalAlumnos);
 
                 javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -193,6 +213,29 @@ public class FormAlumno extends javax.swing.JFrame {
                 objetoAlumnos.MostrarAlumnos(tbTotalAlumnos);
 	
         }//GEN-LAST:event_btnGuardarActionPerformed
+
+        private void tbTotalAlumnosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbTotalAlumnosMouseClicked
+               CAlumnos objetoAlumno =new CAlumnos();
+		objetoAlumno.SeleccionarAlumno(tbTotalAlumnos, txtid, txtNombre, TxtApellidos );
+        }//GEN-LAST:event_tbTotalAlumnosMouseClicked
+
+        private void BtnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnModificarActionPerformed
+                // TODO add your handling code here:
+		CAlumnos objetoAlumno =new CAlumnos();
+		objetoAlumno.ModificarAlumnos(txtid,txtNombre, TxtApellidos);
+		
+                CAlumnos objetoAlumnos=new CAlumnos();
+               objetoAlumnos.MostrarAlumnos(tbTotalAlumnos);
+        }//GEN-LAST:event_BtnModificarActionPerformed
+
+        private void BtnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnEliminarActionPerformed
+                // TODO add your handling code here:
+		CAlumnos objetoAlumno =new CAlumnos();
+		objetoAlumno.EliminarAlumnos(txtid);
+		
+                CAlumnos objetoAlumnos=new CAlumnos();
+               objetoAlumnos.MostrarAlumnos(tbTotalAlumnos);
+        }//GEN-LAST:event_BtnEliminarActionPerformed
 
 	/**
 	 * @param args the command line arguments

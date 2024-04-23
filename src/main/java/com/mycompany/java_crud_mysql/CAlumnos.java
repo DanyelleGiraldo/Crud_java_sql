@@ -6,6 +6,7 @@ package com.mycompany.java_crud_mysql;
 
 import java.sql.CallableStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -101,6 +102,63 @@ public class CAlumnos {
 		JOptionPane.showMessageDialog(null, "No se pudieron mostrar los registros error: " + e.toString());
 	  }
     }
+
+    public void SeleccionarAlumno(JTable paramTablaAlumnos, JTextField paramId, JTextField paramNombres, JTextField paramApellidos) {
+	    try{
+		int fila = paramTablaAlumnos.getSelectedRow();
+
+		if (fila >= 0){
+		paramId.setText(String.valueOf(paramTablaAlumnos.getValueAt(fila, 0).toString()));
+		paramNombres.setText(String.valueOf(paramTablaAlumnos.getValueAt(fila, 1).toString()));
+		paramApellidos.setText(String.valueOf(paramTablaAlumnos.getValueAt(fila, 2).toString()));
+		}
+		else{
+			JOptionPane.showMessageDialog(null, "fila no seleccionada");
+		}
+	    }catch (Exception e){
+		    JOptionPane.showMessageDialog(null, "error de seleccion, error: " + e.toString());
+	    }
+    }
+
+    public void ModificarAlumnos(JTextField paramCodigo, JTextField paramNombres, JTextField paramApellidos) {
+    setCodigo(Integer.parseInt(paramCodigo.getText()));
+    setNombreAlumno(paramNombres.getText());
+    setApellidosAlumnos(paramApellidos.getText());
+    
+    Cconexion objetoConexion = new Cconexion();
+
+    String consulta = "UPDATE alumnos SET nombres = ?, apellidos = ? WHERE id = ?;";
+
+    try {
+        CallableStatement cs = objetoConexion.estableceConexion().prepareCall(consulta);
+
+        cs.setString(1, getNombreAlumno());
+        cs.setString(2, getApellidosAlumnos());
+        cs.setInt(3, getCodigo());
+
+        cs.execute();
+        JOptionPane.showMessageDialog(null, "Modificación exitosa");
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(null, "No se modificó, error: " + e.toString());
+    }
+}
+	public void EliminarAlumnos(JTextField paramCodigo){
+		setCodigo(Integer.parseInt(paramCodigo.getText()));
+
+		Cconexion objetoconexion = new Cconexion();
+
+		String consulta = "DELETE FROM Alumnos WHERE alumnos.id= ?";
+
+		try{
+			CallableStatement cs = objetoconexion.estableceConexion().prepareCall(consulta);
+
+			cs.setInt(1, getCodigo());
+			cs.execute();
+			JOptionPane.showMessageDialog(null, "se elimino correctamente el alumno");
+		}catch (SQLException e){
+			JOptionPane.showMessageDialog(null, "No se pudo elimar el estudiante, error: "+e.toString());
+		}
+	}
 }
 
 
