@@ -15,9 +15,9 @@ import javax.swing.JOptionPane;
 public class Cconexion {
    Connection conectar= null;
 
-   String usuario= "danilo";
-   String contraseña= "hola";
-   String bd= "DBescuela";
+   String usuario= "root";
+   String contraseña= "9617";
+   String bd= "gestion_estudiantes";
    String ip= "localhost";
    String puerto = "3306";
    
